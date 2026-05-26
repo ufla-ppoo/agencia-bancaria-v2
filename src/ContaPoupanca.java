@@ -27,6 +27,9 @@ public class ContaPoupanca extends Conta {
      */
     public ContaPoupanca(double saldoInicial, double taxaRendimento) {
         super(saldoInicial);
+        if (taxaRendimento <= 0) {
+            throw new IllegalArgumentException("A taxa de rendimento deve ser positiva.");
+        }
         this.taxaRendimento = taxaRendimento;
     }
 

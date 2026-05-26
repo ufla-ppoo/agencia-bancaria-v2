@@ -25,16 +25,15 @@ public class InterfaceUsuario {
     }
 
     private int exibirMenu() {
-        System.out.println("Bem-vindo à agência " + agencia.getNome() + "!\n");
+        System.out.println("Bem-vindo a agencia " + agencia.getNome() + "!\n");
         System.out.println(
                 "1 - Criar conta\n" +
-                "2 - Relatório\n" +
-                "3 - Depósito\n" +
+                "2 - Relatorio\n" +
+                "3 - Deposito\n" +
                 "4 - Saque\n" +
-                "5 - Transferência\n" +
+                "5 - Transferencia\n" +
                 "6 - Sair\n" );
-        System.out.print("Digite sua opcao: ");
-        return Integer.parseInt(entrada.nextLine());
+        return pedirInteiro("Digite sua opcao: ");
     }
 
     private void tratarOpcaoMenu(int opcao) {
@@ -56,7 +55,7 @@ public class InterfaceUsuario {
                 fazerTransferencia();
                 break;
             case 6:
-                System.out.println("\nObrigado por usar os servicos da Agencia " + agencia.getNome() + "!\n");
+                System.out.println("\nObrigado por usar os servicos da " + agencia.getNome() + "!\n");
                 break;
             default:
                 System.out.println("\nOpcao invalida!\n");
@@ -82,9 +81,27 @@ public class InterfaceUsuario {
         System.out.println(agencia.gerarRelatorio());
     }
 
+    private int pedirInteiro(String instrucao) {
+        int valor = 0;
+        boolean valorValido = false;
+        do {
+            try {
+                System.out.println(instrucao);
+                valor = Integer.parseInt(entrada.nextLine());
+                valorValido = true;
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Digite um valor inteiro valido!");
+                aguardarEnter();
+            }
+        }
+        while (!valorValido);
+        return valor;
+    }
+
     private int pedirConta() {
-        System.out.print("Digite o numero da conta: ");
-        return Integer.parseInt(entrada.nextLine());
+        return pedirInteiro("Digite o numero da conta: ");
+        
     }
 
     private void aguardarEnter() {
@@ -94,8 +111,7 @@ public class InterfaceUsuario {
     }
 
     private double pedirValor() {
-        System.out.print("Digite o valor: ");
-        return Double.parseDouble(entrada.nextLine());
+        return pedirInteiro("Digite o valor: ");
     }
 
     private void fazerDeposito() {		
@@ -116,7 +132,7 @@ public class InterfaceUsuario {
             System.out.println(e.getMessage());
             System.out.println("A conta tinha apenas " + e.getSaldo() + " de saldo!");
         } catch (Exception e) {
-            System.out.println("Não foi possível sacar!");
+            System.out.println("Não foi possivel sacar!");
             System.out.println(e.getMessage());
         }
     }
@@ -129,7 +145,7 @@ public class InterfaceUsuario {
             System.out.println(e.getMessage());
             System.out.println("A conta tinha apenas " + e.getSaldo() + " de saldo!");
         } catch (Exception e) {
-            System.out.println("Não foi possível transferir!");
+            System.out.println("Não foi possivel transferir!");
             System.out.println(e.getMessage());
         }
     }

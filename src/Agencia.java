@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Representa uma agência bancária.
  * 
- * Uma agência possui um nome e uma lista de contas. E permite realizar 
+ * Uma agência possui um nome e uma coleção de contas. E permite realizar 
  * operações sobre as contas (a partir de seus números de identificação).
  * 
  * @author Julio César Alves
@@ -22,6 +22,9 @@ public class Agencia {
      * @param nome Nome da agência.
      */
     public Agencia(String nome) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("O nome da agência deve ser uma string válida");
+        }
         this.nome = nome;
         contas = new HashMap<>();
     }
@@ -83,7 +86,7 @@ public class Agencia {
     private Conta buscarConta(int numeroConta) {
         Conta conta = contas.get(numeroConta);
         if (conta == null) {
-            throw new RuntimeException("Conta " + numeroConta + " inválida!!!");
+            throw new RuntimeException("Conta " + numeroConta + " invalida!!!");
         }
         return conta;
     }
@@ -92,14 +95,14 @@ public class Agencia {
      * Retorna um relatório da agência com os dados das contas
      */
     public String gerarRelatorio() {        
-        String relatorio = "\n==== Agência " + nome + " ====\n";
+        String relatorio = "\n==== Agencia " + nome + " ====\n";
         if (contas.size() > 0) {
             for (int numero : contas.keySet()) {
                 relatorio += contas.get(numero).extrato() + "\n";
             }
         }
         else {
-            relatorio += "Não há contas nessa agência.\n";
+            relatorio += "Nao ha contas nessa agência.\n";
         }
         return relatorio;
     }

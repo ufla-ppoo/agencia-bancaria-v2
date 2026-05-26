@@ -23,7 +23,7 @@ public class Conta {
     public Conta(double saldoInicial) {
         this.numero = proximoNumero;
         proximoNumero++;
-        saldo = saldoInicial;
+        depositar(saldoInicial);
     }
 
     /**
@@ -57,6 +57,9 @@ public class Conta {
      * @param valor Valor a ser depositado.
      */
     public void depositar(double valor) {
+        if (valor < 0) {
+            throw new IllegalArgumentException("O valor a ser depositado deve ser positivo");
+        }
         saldo += valor;
     }
 
@@ -67,10 +70,10 @@ public class Conta {
      */
     public void sacar(double valor) {
         // se a conta tem saldo suficiente, faz o saque
-        if (saldo >= valor) {
-            saldo -= valor;
-        } else
-            throw new SaldoInsuficienteException(numero, saldo);
+        if (saldo < valor) {
+            throw new SaldoInsuficienteException(numero, saldo);            
+        }
+        saldo -= valor;
     }
 
     /**
@@ -85,7 +88,10 @@ public class Conta {
         try {
             sacar(valor);
             contaDestino.depositar(valor);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
+            // se ocorreu algum erro, e o dinheiro havia sido sacado,
+            // retorna o dinheiro para que ele não seja perdido
             if (saldo == saldoAnterior - valor) {
                 depositar(valor);
             }
